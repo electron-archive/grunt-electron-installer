@@ -158,7 +158,7 @@ class AutoUpdater
     require('app').quit();    
 
   downloadUpdate = (callback) ->
-    @spawn ['--download', @updateUrl], (error, stdout) ->
+    spawn ['--download', @updateUrl], (error, stdout) ->
       return callback(error) if error?
 
       try
@@ -172,7 +172,7 @@ class AutoUpdater
       callback(null, update)
 
   installUpdate = (callback) ->
-    @spawn(['--update', @updateUrl], callback)  
+    spawn(['--update', @updateUrl], callback)  
 
   checkForUpdates: ->
     throw new Error('Update URL is not set') unless @updateUrl
