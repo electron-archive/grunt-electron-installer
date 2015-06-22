@@ -118,7 +118,7 @@ if (handleStartupEvent()) {
 
 ## Checking for updates, downloading and installing
 
-```coffescript
+```coffeescript
 ChildProcess = require 'child_process'
 path = require 'path'
 
