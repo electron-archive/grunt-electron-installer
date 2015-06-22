@@ -115,3 +115,78 @@ if (handleStartupEvent()) {
   return;
 }
 ```
+
+## Checking for updates, downloading and installing
+
+```coffescript
+ChildProcess = require 'child_process'
+path = require 'path'
+
+class AutoUpdater
+
+  appFolder = path.resolve(process.execPath, '..')
+  electronFolder = path.resolve(appFolder, '..')
+  updateDotExe = path.join(electronFolder, 'Update.exe')
+
+  @setFeedUrl: (@updateUrl) ->
+
+  _spawn = (command, args, callback) ->
+    stdout = ''
+
+    try
+      spawnedProcess = ChildProcess.spawn(command, args)
+    catch error
+      # Spawn can throw an error
+      process.nextTick -> callback?(error, stdout)
+      return
+
+    spawnedProcess.stdout.on 'data', (data) -> stdout += data
+
+    error = null
+    spawnedProcess.on 'error', (processError) -> error ?= processError
+    spawnedProcess.on 'close', (code, signal) ->
+      error ?= new Error("Command failed: #{signal ? code}") if code isnt 0
+      error?.code ?= code
+      error?.stdout ?= stdout
+      callback?(error, stdout)
+
+  spawn = (args, callback) ->
+    _spawn(updateDotExe, args, callback)
+
+  quitAndInstall =() ->
+    spawnUpdate ['--processStart', exeName], ->
+    require('app').quit();    
+
+  downloadUpdate = (callback) ->
+    @spawn ['--download', @updateUrl], (error, stdout) ->
+      return callback(error) if error?
+
+      try
+        # Last line of output is the JSON details about the releases
+        json = stdout.trim().split('\n').pop()
+        update = JSON.parse(json)?.releasesToApply?.pop?()
+      catch error
+        error.stdout = stdout
+        return callback(error)
+
+      callback(null, update)
+
+  installUpdate = (callback) ->
+    @spawn(['--update', @updateUrl], callback)  
+
+  checkForUpdates: ->
+    throw new Error('Update URL is not set') unless @updateUrl
+
+    downloadUpdate (error, update) =>
+      if error?
+        return
+
+      unless update?
+        return
+
+      installUpdate (error) =>
+        if error?
+          return
+
+        quitAndInstall()
+```
