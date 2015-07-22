@@ -12,6 +12,9 @@
     "prepublish": "grunt clean lint coffee",
     "test": "grunt test"
   },
+  "os": [
+    "win32"
+  ],
   "dependencies": {
     "temp": "^0.8.1",
     "underscore": "^1.7.0",
