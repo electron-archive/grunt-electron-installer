@@ -61,7 +61,7 @@ There are several configuration settings supported:
 | `certificatePassword` | No       | The password to decrypt the certificate given in `certificateFile` |
 | `signWithParams`      | No       | Params to pass to signtool.  Overrides `certificateFile` and `certificatePassword`. |
 | `iconUrl`             | No       | A URL to an ICO file to use as the application icon (displayed in Control Panel > Programs and Features). Defaults to the Atom icon. |
-| `setupIcon`           | No       | The ICO file to use as the icon for the generated Setup.exe |
+| `icon`                | No       | The ICO file to use as the icon for the generated Setup.exe |
 | `remoteReleases`      | No       | A URL to your existing updates. If given, these will be downloaded to create delta updates |
 
 ## Sign your installer or else bad things will happen

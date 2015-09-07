@@ -102,10 +102,10 @@ module.exports = (grunt) ->
           args.push '--signWithParams'
           args.push "/a /f \"#{path.resolve(certificateFile)}\" /p \"#{certificatePassword}\""
 
-        if config.setupIcon
-          setupIconPath = path.resolve(config.setupIcon)
-          args.push '--setupIcon'
-          args.push setupIconPath
+        if config.icon or config.setupIcon
+          iconPath = path.resolve(config.icon or config.setupIcon)
+          args.push '--icon'
+          args.push iconPath
 
         exec {cmd, args}, (error) ->
           return done(error) if error?
