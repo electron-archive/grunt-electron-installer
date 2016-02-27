@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "asar": "~0.8.0",
-    "electron-winstaller": "^2.0.2",
+    "electron-winstaller": "2.0.2",
     "temp": "^0.8.1",
     "underscore": "^1.7.0"
   },
