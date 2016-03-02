@@ -9,15 +9,13 @@
     "url": "https://github.com/atom/grunt-electron-installer.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "jasmine-focused --captureExceptions spec"
   },
   "dependencies": {
     "electron-winstaller": "2.0.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-shell": "^1.1.1",
     "jasmine-focused": "^1.0.5",
     "temp": "^0.8.1"
   },
