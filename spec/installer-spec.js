@@ -1,38 +1,48 @@
-fs = require 'fs'
-path = require 'path'
+var fs = require('fs');
+var path = require('path');
+var grunt = require('grunt');
+var temp = require('temp');
 
-grunt = require 'grunt'
-temp = require 'temp'
+describe('create-windows-installer task', function () {
+  beforeEach(function() {
+    var updateExePath = path.join(__dirname, 'fixtures', 'app', 'Update.exe');
+    if (fs.existsSync(updateExePath)) {
+      fs.unlinkSync(updateExePath);
+    }
+  });
 
-describe 'create-windows-installer task', ->
-  beforeEach ->
-    updateExePath = path.join(__dirname, 'fixtures', 'app', 'Update.exe')
-    fs.unlinkSync(updateExePath) if fs.existsSync(updateExePath)
+  it('creates a nuget package and installer', function () {
+    var outputDirectory = temp.mkdirSync('grunt-electron-installer-');
 
-  it 'creates a nuget package and installer', ->
-    outputDirectory = temp.mkdirSync('grunt-electron-installer-')
-
-    grunt.config.init
-      pkg: grunt.file.readJSON(path.join(__dirname, 'fixtures', 'app', 'resources', 'app', 'package.json'))
-
-      'create-windows-installer':
-        config:
-          appDirectory: path.join(__dirname, 'fixtures', 'app')
+    grunt.config.init({
+      pkg: grunt.file.readJSON(path.join(__dirname, 'fixtures', 'app', 'resources', 'app', 'package.json')),
+      'create-windows-installer': {
+        config: {
+          appDirectory: path.join(__dirname, 'fixtures', 'app'),
           outputDirectory: outputDirectory
+        }
+      }
+    });
 
-    grunt.loadTasks(path.resolve(__dirname, '..', 'tasks'))
+    grunt.loadTasks(path.resolve(__dirname, '..', 'tasks'));
 
-    tasksDone = false
-    grunt.registerTask 'done', 'done',  -> tasksDone = true
-    grunt.task.run(['create-windows-installer', 'done']).start()
+    var tasksDone = false;
+    grunt.registerTask('done', 'done', function () {
+      tasksDone = true;
+    });
+    grunt.task.run(['create-windows-installer', 'done']).start();
 
-    waitsFor 30000, -> tasksDone
+    waitsFor(30000, function () {
+      return tasksDone;
+    });
 
-    runs ->
-      expect(fs.existsSync(path.join(outputDirectory, 'myapp-1.0.0-full.nupkg'))).toBe true
-      expect(fs.existsSync(path.join(outputDirectory, 'MyAppSetup.exe'))).toBe true
-      
-      if process.platform is 'win32'
-        expect(fs.existsSync(path.join(outputDirectory, 'MyAppSetup.msi'))).toBe true
-
-      expect(fs.existsSync(path.join(__dirname, 'fixtures', 'app', 'Update.exe'))).toBe true
+    runs(function () {
+      expect(fs.existsSync(path.join(outputDirectory, 'myapp-1.0.0-full.nupkg'))).toBe(true);
+      expect(fs.existsSync(path.join(outputDirectory, 'MyAppSetup.exe'))).toBe(true);
+      if (process.platform === 'win32') {
+        expect(fs.existsSync(path.join(outputDirectory, 'MyAppSetup.msi'))).toBe(true);
+      }
+      expect(fs.existsSync(path.join(__dirname, 'fixtures', 'app', 'Update.exe'))).toBe(true);
+    });
+  });
+});
