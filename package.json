@@ -12,7 +12,7 @@
     "test": "jasmine-focused --captureExceptions spec"
   },
   "dependencies": {
-    "electron-winstaller": "2.0.2"
+    "electron-winstaller": "2.0.4"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
