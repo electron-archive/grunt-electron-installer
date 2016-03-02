@@ -9,7 +9,6 @@
     "url": "https://github.com/atom/grunt-electron-installer.git"
   },
   "scripts": {
-    "prepublish": "grunt clean lint coffee",
     "test": "grunt test"
   },
   "dependencies": {
