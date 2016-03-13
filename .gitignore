@@ -5,3 +5,4 @@ SquirrelSetup.log
 .node-version
 .DS_Store
 spec/fixtures/app/Update.exe
+.idea/
