@@ -12,14 +12,11 @@
     "test": "jasmine-focused --captureExceptions spec"
   },
   "dependencies": {
-    "electron-winstaller": "2.0.4"
+    "electron-winstaller": "2.0.5"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
     "jasmine-focused": "^1.0.5",
     "temp": "^0.8.1"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.0"
   }
 }
