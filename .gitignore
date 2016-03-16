@@ -1,8 +1,8 @@
 node_modules/
 build/
-tasks/
 npm-debug.log
 SquirrelSetup.log
 .node-version
 .DS_Store
 spec/fixtures/app/Update.exe
+.idea/
