@@ -8,9 +8,15 @@ Grunt plugin that builds Windows installers for
 
 ## Installing
 
+**Note:**
+Currently grunt-electron-installer only works on **Windows only**.
+
 ```sh
 npm install --save-dev grunt-electron-installer
 ```
+
+If you want to include this plugin in a cross platform project, install it with `--save-optional` instead of `--save-dev`.
+This will prevent installation error on Mac/Linux.
 
 ## Configuring
 

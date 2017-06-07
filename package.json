@@ -11,6 +11,9 @@
   "scripts": {
     "test": "jasmine-focused --captureExceptions spec"
   },
+  "os": [
+    "win32"
+  ],
   "dependencies": {
     "electron-winstaller": "^2.2.0"
   },
